@@ -109,14 +109,14 @@ alias gpsh='git push'
 alias gpll='git pull'
 alias gl='git log --oneline --graph --decorate --all'
 
-alias ls = "eza --icons --group-directories-first --color=always";
-alias l = "eza --icons --group-directories-first --color=always";
-alias la = "eza --icons --group-directories-first --color=always -a";
-alias ll = "eza --icons --group-directories-first --color=always -l";
-alias lla = "eza --icons --group-directories-first --color=always -la";
-alias lt = "eza --icons --group-directories-first --color=always --tree";
+alias ls='eza --icons --group-directories-first --color=always'
+alias l='eza --icons --group-directories-first --color=always'
+alias la='eza --icons --group-directories-first --color=always -a'
+alias ll='eza --icons --group-directories-first --color=always -l'
+alias lla='eza --icons --group-directories-first --color=always -la'
+alias lt='eza --icons --group-directories-first --color=always --tree'
 
-alias cat = "bat --style=plain --color=always";
+alias cat='bat --style=plain --color=always'
 
 bindkey -v
 
