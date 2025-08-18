@@ -93,16 +93,30 @@ eval "$(starship init zsh)"
 # ==================== end tools block ====================
 
 # Custom aliases
+alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
 alias nv='nvim'
 
+alias g='g'
 alias ga='git add'
 alias gA='git add -A'
 alias gs='git status'
+alias gd='git diff'
+alias gc='git commit'
 alias gcm='git commit -m'
 alias gpsh='git push'
-alias gc='git commit'
+alias gpll='git pull'
+alias gl='git log --oneline --graph --decorate --all'
+
+alias ls = "eza --icons --group-directories-first --color=always";
+alias l = "eza --icons --group-directories-first --color=always";
+alias la = "eza --icons --group-directories-first --color=always -a";
+alias ll = "eza --icons --group-directories-first --color=always -l";
+alias lla = "eza --icons --group-directories-first --color=always -la";
+alias lt = "eza --icons --group-directories-first --color=always --tree";
+
+alias cat = "bat --style=plain --color=always";
 
 bindkey -v
 
