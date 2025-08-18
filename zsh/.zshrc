@@ -90,38 +90,21 @@ if ! _has starship && [[ ! -x "$BIN_DIR/starship" ]]; then
 fi
 eval "$(starship init zsh)"
 
-# Create a minimal Starship config once
-STAR_CFG="$CFG_DIR/starship.toml"
-if [[ ! -f "$STAR_CFG" ]]; then
-  cat > "$STAR_CFG" <<'EOF'
-add_newline = false
-format = "$username$hostname$directory$git_branch$git_state$git_status$cmd_duration$line_break$character"
-
-[character]
-success_symbol = "❯"
-error_symbol = "❯"
-vimcmd_symbol = "❮"
-
-[directory]
-truncation_length = 3
-truncate_to_repo = true
-style = "bold cyan"
-
-[git_branch]
-symbol = " "
-style = "purple"
-
-[cmd_duration]
-min_time = 200
-show_milliseconds = true
-EOF
-fi
 # ==================== end tools block ====================
 
 # Custom aliases
-alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
+alias nv='nvim'
+
+alias ga='git add'
+alias gA='git add -A'
+alias gs='git status'
+alias gcm='git commit -m'
+alias gpsh='git push'
+alias gc='git commit'
+
+bindkey -v
 
 # ---- Lightweight plugin bootstrap (no framework) ----
 command -v git >/dev/null || { echo "git not found; skipping plugin setup"; return; }
