@@ -90,6 +90,26 @@ if ! _has starship && [[ ! -x "$BIN_DIR/starship" ]]; then
 fi
 eval "$(starship init zsh)"
 
+# --- Starship + vi-mode: safe zle-keymap-select wrapper (no recursion) ---
+if [[ -z ${__STARSHIP_ZLE_WRAP_DONE-} ]]; then
+  __STARSHIP_ZLE_WRAP_DONE=1
+  # Save whatever zle-keymap-select currently is (Starship's widget)
+  if zle -l | grep -q '^zle-keymap-select$'; then
+    zle -A zle-keymap-select _starship_orig_zle_keymap_select
+  fi
+
+  function zle-keymap-select {
+    case $KEYMAP in
+      vicmd)      RPROMPT="[N]"  ;;
+      main|viins) RPROMPT="[I]"  ;;
+      *)          RPROMPT=""     ;;
+    esac
+    [[ -n ${widgets[_starship_orig_zle_keymap_select]} ]] && \
+      zle _starship_orig_zle_keymap_select -- "$@"
+  }
+  zle -N zle-keymap-select
+fi
+
 # ==================== end tools block ====================
 
 # Custom aliases
