@@ -137,6 +137,22 @@ alias lla='eza --icons --group-directories-first --color=always -la'
 alias lt='eza --icons --group-directories-first --color=always --tree'
 
 bindkey -v
+# --- vi yank -> system clipboard via OSC52 (works over SSH/tmux) ---
+_clip() {
+  # If inside tmux, use passthrough so the outer terminal receives OSC52
+  if [[ -n "$TMUX" ]]; then
+    printf '\ePtmux;\e\e]52;c;%s\a\e\\' "$(printf %s "$1" | base64 | tr -d '\n')"
+  else
+    printf '\e]52;c;%s\a' "$(printf %s "$1" | base64 | tr -d '\n')"
+  fi
+}
+
+vi_yank_and_clip() { zle vi-yank; _clip "$CUTBUFFER"; }
+zle -N vi_yank_and_clip
+bindkey -M vicmd 'y'  vi_yank_and_clip
+bindkey -M vicmd 'Y'  vi_yank_and_clip
+bindkey -M vicmd 'yy' vi_yank_and_clip
+
 
 # ---- Lightweight plugin bootstrap (no framework) ----
 command -v git >/dev/null || { echo "git not found; skipping plugin setup"; return; }
