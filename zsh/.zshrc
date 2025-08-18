@@ -116,8 +116,6 @@ alias ll='eza --icons --group-directories-first --color=always -l'
 alias lla='eza --icons --group-directories-first --color=always -la'
 alias lt='eza --icons --group-directories-first --color=always --tree'
 
-alias cat='bat --style=plain --color=always'
-
 bindkey -v
 
 # ---- Lightweight plugin bootstrap (no framework) ----
