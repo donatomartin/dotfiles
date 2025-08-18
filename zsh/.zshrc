@@ -98,15 +98,10 @@ if [[ -z ${__STARSHIP_ZLE_WRAP_DONE-} ]]; then
     zle -A zle-keymap-select _starship_orig_zle_keymap_select
   fi
 
-  function zle-keymap-select {
-    case $KEYMAP in
-      vicmd)      RPROMPT="[N]"  ;;
-      main|viins) RPROMPT="[I]"  ;;
-      *)          RPROMPT=""     ;;
-    esac
-    [[ -n ${widgets[_starship_orig_zle_keymap_select]} ]] && \
-      zle _starship_orig_zle_keymap_select -- "$@"
-  }
+function zle-keymap-select {
+  [[ -n ${widgets[_starship_orig_zle_keymap_select]} ]] && \
+    zle _starship_orig_zle_keymap_select -- "$@"
+}
   zle -N zle-keymap-select
 fi
 
