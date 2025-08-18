@@ -1,0 +1,9 @@
+[credential]
+	helper = "store"
+[gpg]
+	format = "openpgp"
+[init]
+	defaultBranch = "master"
+[user]
+	email = "uo288787@uniovi.es"
+	name = "donatomartin"
