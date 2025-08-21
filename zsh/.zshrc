@@ -11,7 +11,7 @@ mkdir -p "$ZSH_CACHE_DIR"
 autoload -Uz compinit
 compinit -d "$ZSH_CACHE_DIR/zcompdump"
 
-# ====================== zoxide · fzf · fzf-tab · starship ======================
+# ====================== zoxide · fzf · fzf-tab · starship · eza · fd ======================
 # XDG paths + PATH
 BIN_DIR="${XDG_BIN_HOME:-$HOME/.local/bin}"
 DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
@@ -51,25 +51,6 @@ if ! _has fzf; then
   fi
 fi
 
-# fzf defaults (fast source with fd/rg fallback)
-if _has fd; then
-  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-elif _has rg; then
-  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!{.git,node_modules,target}"'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-else
-  export FZF_DEFAULT_COMMAND='find -L . -type f 2>/dev/null'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-fi
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
-
-# fzf keybindings & completion (system paths or git clone)
-for base in /usr/share/doc/fzf /usr/share/fzf /usr/local/opt/fzf "$DATA_DIR/fzf"; do
-  [[ -r "$base/shell/key-bindings.zsh" ]] && source "$base/shell/key-bindings.zsh"
-  [[ -r "$base/shell/completion.zsh"   ]] && source "$base/shell/completion.zsh"
-done
-
 # ---- fzf-tab (fzf-powered completion UI) ----
 PLUGINDIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
 mkdir -p "$PLUGINDIR"
@@ -105,6 +86,23 @@ function zle-keymap-select {
   zle -N zle-keymap-select
 fi
 
+# --- eza ---
+if ! _has eza; then
+  echo "[warning] eza not found"
+else
+  alias ls='eza --icons --group-directories-first --color=always'
+  alias l='eza --icons --group-directories-first --color=always'
+  alias la='eza --icons --group-directories-first --color=always -a'
+  alias ll='eza --icons --group-directories-first --color=always -l'
+  alias lla='eza --icons --group-directories-first --color=always -la'
+  alias lt='eza --icons --group-directories-first --color=always --tree'
+fi
+
+# --- fd ---
+if ! _has fd; then
+  echo "[warning] fd not found"
+fi
+
 # ==================== end tools block ====================
 
 # Custom aliases
@@ -123,13 +121,6 @@ alias gcm='git commit -m'
 alias gpsh='git push'
 alias gpll='git pull'
 alias gl='git log --oneline --graph --decorate --all'
-
-alias ls='eza --icons --group-directories-first --color=always'
-alias l='eza --icons --group-directories-first --color=always'
-alias la='eza --icons --group-directories-first --color=always -a'
-alias ll='eza --icons --group-directories-first --color=always -l'
-alias lla='eza --icons --group-directories-first --color=always -la'
-alias lt='eza --icons --group-directories-first --color=always --tree'
 
 bindkey -v
 # --- vi yank -> system clipboard via OSC52 (works over SSH/tmux) ---
